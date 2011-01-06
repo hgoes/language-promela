@@ -1,0 +1,3 @@
+This is a Promela parser and pretty printer written in Haskell.
+Promela (Process Meta Language) is a specification language used for example in the SPIN model checker.
+This module can be used to generate correct promela code.

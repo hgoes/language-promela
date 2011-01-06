@@ -1,0 +1,14 @@
+Name:           language-promela
+Version:        0.1
+Author:         Henning Günther
+Cabal-Version:  >= 1.2
+Build-Type:     Simple
+
+Library
+  Build-Depends:        base,array,pretty,mtl,containers,bytestring
+  Exposed-Modules:
+    Language.Promela.Tokens
+    Language.Promela.Lexer
+    Language.Promela.Syntax
+    Language.Promela.Parser
+    Language.Promela.Pretty
