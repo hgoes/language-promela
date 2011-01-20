@@ -95,7 +95,7 @@ prettyStep (StepDecl decl) = prettyDeclaration decl
 
 prettyStatement :: Statement -> Doc
 prettyStatement (StmtIf cases) = text "if" $+$
-                                 nest 2 (vcat (map (\c -> colon <> colon $$ nest 2 (prettySequence c)) cases)) $+$
+                                 nest 2 (vcat (map (\c -> colon <> colon $$ nest 3 (prettySequence c)) cases)) $+$
                                  text "fi"
 prettyStatement (StmtDo cases) = text "do" $+$
                                  nest 2 (vcat (map (\c -> colon <> colon $$ nest 3 (prettySequence c)) cases)) $+$
