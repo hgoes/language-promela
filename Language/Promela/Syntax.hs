@@ -14,6 +14,7 @@ data Module
     | CState String String (Maybe String)
     | CDecl String
     | Init (Maybe Integer) [Step]
+    | Never [Step]
     deriving Show
 
 data Declaration = Declaration

@@ -33,6 +33,7 @@ prettyModule (Init prio steps) = text "init" <+> (case prio of
                                                      Just n -> text "priority" <+> integer n) <+>
                                  lbrace $$ nest 2 (prettySequence steps) $$ rbrace
 prettyModule (Decl decl) = prettyDeclaration decl
+prettyModule (Never steps) = text "never" <+> lbrace $$ nest 2 (prettySequence steps) $$ rbrace
 
 prettyDeclarations :: [Declaration] -> Doc
 prettyDeclarations = hsep . punctuate semi . map prettyDeclaration
