@@ -87,6 +87,7 @@ data Statement
     | StmtCCode String
     | StmtCExpr (Maybe String) String
     | StmtAssign VarRef AnyExpression
+    | StmtReceive String [RecvArg]
     deriving Show
 
 data Constant
@@ -94,3 +95,8 @@ data Constant
     | ConstInt Integer
     | ConstSkip
     deriving Show
+
+data RecvArg = RecvVar VarRef
+             | RecvEval VarRef
+             | RecvConst Constant
+             deriving Show

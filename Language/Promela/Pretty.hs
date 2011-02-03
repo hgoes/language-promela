@@ -113,6 +113,12 @@ prettyStatement (StmtLabel lbl stmt) = text lbl <> char ':' $+$
 prettyStatement (StmtCCode code) = text "c_code" <+> lbrace $$ (nest 2 $ vcat $ map text (lines code)) $$ rbrace
 prettyStatement (StmtExpr expr) = prettyExpression 0 expr
 prettyStatement (StmtAssign var expr) = prettyVarRef var <+> text "=" <+> prettyAnyExpression 0 expr
+prettyStatement (StmtReceive to args) = text to <> char '?' <> hcat (punctuate comma (map prettyRecvArg args))
+
+prettyRecvArg :: RecvArg -> Doc
+prettyRecvArg (RecvVar ref) = prettyVarRef ref
+prettyRecvArg (RecvEval ref) = text "eval" <> parens (prettyVarRef ref)
+prettyRecvArg (RecvConst c) = prettyConst c
 
 prettyBinOp :: BinOp -> Doc
 prettyBinOp op = text $ case op of
