@@ -114,6 +114,7 @@ prettyStatement (StmtCCode code) = text "c_code" <+> lbrace $$ (nest 2 $ vcat $ 
 prettyStatement (StmtExpr expr) = prettyExpression 0 expr
 prettyStatement (StmtAssign var expr) = prettyVarRef var <+> text "=" <+> prettyAnyExpression 0 expr
 prettyStatement (StmtReceive to args) = text to <> char '?' <> hcat (punctuate comma (map prettyRecvArg args))
+prettyStatement (StmtSequence steps) = lbrace $$ nest 2 (prettySequence steps) $$ rbrace
 
 prettyRecvArg :: RecvArg -> Doc
 prettyRecvArg (RecvVar ref) = prettyVarRef ref
