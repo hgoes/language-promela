@@ -123,8 +123,8 @@ prettyRecvArg (RecvConst c) = prettyConst c
 
 prettyBinOp :: BinOp -> Doc
 prettyBinOp op = text $ case op of
-  BinOr -> "or"
-  BinAnd -> "and"
+  BinOr -> "||"
+  BinAnd -> "&&"
   BinBitOr -> "|"
   BinExp -> "^"
   BinBitAnd -> "&"
