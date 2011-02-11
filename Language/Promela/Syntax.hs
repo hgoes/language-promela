@@ -88,6 +88,8 @@ data Statement
     | StmtCExpr (Maybe String) String
     | StmtAssign VarRef AnyExpression
     | StmtReceive String [RecvArg]
+    | StmtPrintf String [AnyExpression]
+    | StmtPrintm Expression
     deriving Show
 
 data Constant

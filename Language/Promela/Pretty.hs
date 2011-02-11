@@ -115,6 +115,10 @@ prettyStatement (StmtExpr expr) = prettyExpression 0 expr
 prettyStatement (StmtAssign var expr) = prettyVarRef var <+> text "=" <+> prettyAnyExpression 0 expr
 prettyStatement (StmtReceive to args) = text to <> char '?' <> hcat (punctuate comma (map prettyRecvArg args))
 prettyStatement (StmtSequence steps) = lbrace $$ nest 2 (prettySequence steps) $$ rbrace
+prettyStatement (StmtPrintf str args) = text "printf" <> parens (text (show str)
+                                                                 <> (vcat $ fmap (\expr -> comma <> prettyAnyExpression 0 expr) args)
+                                                                )
+prettyStatement (StmtPrintm expr) = text "printm" <> parens (prettyExpression 0 expr)
 
 prettyRecvArg :: RecvArg -> Doc
 prettyRecvArg (RecvVar ref) = prettyVarRef ref
