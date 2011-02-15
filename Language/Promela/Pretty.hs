@@ -111,6 +111,10 @@ prettyStatement (StmtGoto lbl) = text "goto" <+> text lbl
 prettyStatement (StmtLabel lbl stmt) = text lbl <> char ':' $+$
                                        nest 2 (prettyStatement stmt)
 prettyStatement (StmtCCode code) = text "c_code" <+> lbrace $$ (nest 2 $ vcat $ map text (lines code)) $$ rbrace
+prettyStatement (StmtCExpr cond expr) = text "c_expr" <> (case cond of 
+                                                             Nothing -> empty
+                                                             Just c -> brackets (text c))
+                                        <+> lbrace $$ (nest 2 $ vcat $ map text (lines expr)) $$ rbrace
 prettyStatement (StmtExpr expr) = prettyExpression 0 expr
 prettyStatement (StmtAssign var expr) = prettyVarRef var <+> text "=" <+> prettyAnyExpression 0 expr
 prettyStatement (StmtReceive to args) = text to <> char '?' <> hcat (punctuate comma (map prettyRecvArg args))
