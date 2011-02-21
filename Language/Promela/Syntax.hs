@@ -102,3 +102,21 @@ data RecvArg = RecvVar VarRef
              | RecvEval VarRef
              | RecvConst Constant
              deriving Show
+
+prIf :: ToStep a => [[a]] -> Statement
+prIf stps = StmtIf (fmap (fmap toStep) stps)
+
+prAtomic :: ToStep a => [a] -> Statement
+prAtomic stps = StmtAtomic (fmap toStep stps)
+
+prDStep :: ToStep a => [a] -> Statement
+prDStep stps = StmtDStep (fmap toStep stps)
+
+class ToStep a where
+  toStep :: a -> Step
+
+instance ToStep Statement where
+  toStep stmt = StepStmt stmt Nothing
+
+instance ToStep Step where
+  toStep = id
