@@ -112,6 +112,18 @@ prAtomic stps = StmtAtomic (fmap toStep stps)
 prDStep :: ToStep a => [a] -> Statement
 prDStep stps = StmtDStep (fmap toStep stps)
 
+prNever :: ToStep a => [a] -> Module
+prNever stps = Never (fmap toStep stps)
+
+prSequence :: ToStep a => [a] -> Statement
+prSequence stps = StmtSequence (fmap toStep stps)
+
+prDo :: ToStep a => [[a]] -> Statement
+prDo stps = StmtDo (fmap (fmap toStep) stps)
+
+prInit :: ToStep a => [a] -> Module
+prInit stps = Init Nothing (fmap toStep stps)
+
 class ToStep a where
   toStep :: a -> Step
 
