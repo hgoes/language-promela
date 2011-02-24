@@ -123,6 +123,7 @@ prettyStatement (StmtPrintf str args) = text "printf" <> parens (text (show str)
                                                                  <> (vcat $ fmap (\expr -> comma <> prettyAnyExpression 0 expr) args)
                                                                 )
 prettyStatement (StmtPrintm expr) = text "printm" <> parens (prettyExpression 0 expr)
+prettyStatement (StmtRun name args) = text "run" <+> text name <> parens (hcat (punctuate comma (map (prettyAnyExpression 0) args)))
 
 prettyRecvArg :: RecvArg -> Doc
 prettyRecvArg (RecvVar ref) = prettyVarRef ref

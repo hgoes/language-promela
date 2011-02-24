@@ -90,6 +90,7 @@ data Statement
     | StmtReceive String [RecvArg]
     | StmtPrintf String [AnyExpression]
     | StmtPrintm Expression
+    | StmtRun String [AnyExpression]
     deriving Show
 
 data Constant
