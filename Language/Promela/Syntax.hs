@@ -13,6 +13,7 @@ data Module
     | Typedef String [Declaration]
     | CState String String (Maybe String)
     | CDecl String
+    | CCode String
     | Init (Maybe Integer) [Step]
     | Never [Step]
     deriving Show

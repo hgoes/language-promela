@@ -27,7 +27,8 @@ prettyModule (ProcType { proctypeActive = active
                                 Just expr -> text "provided" <+> parens (prettyExpression 0 expr)) <+>
                             lbrace $+$ (nest 2 $ prettySequence steps) $$ rbrace
 prettyModule (CDecl decl) = text "c_decl" <+> lbrace $$ nest 2 (vcat $ map text $ lines decl) $$ rbrace
-prettyModule (CState decl loc opt) = text "c_state" <+> text (show decl) <+> text (show loc) <+> (maybe empty (text.show) opt) <> semi
+prettyModule (CCode code) = text "c_code" <+> lbrace $$ nest 2 (vcat $ map text $ lines code) $$ rbrace
+prettyModule (CState decl loc opt) = text "c_state" <+> text (show decl) <+> text (show loc) <+> (maybe empty (text.show) opt)
 prettyModule (Init prio steps) = text "init" <+> (case prio of
                                                      Nothing -> empty
                                                      Just n -> text "priority" <+> integer n) <+>
