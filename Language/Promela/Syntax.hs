@@ -92,6 +92,7 @@ data Statement
     | StmtPrintf String [AnyExpression]
     | StmtPrintm Expression
     | StmtRun String [AnyExpression]
+    | StmtSkip
     deriving Show
 
 data Constant

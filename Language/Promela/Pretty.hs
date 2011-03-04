@@ -125,6 +125,7 @@ prettyStatement (StmtPrintf str args) = text "printf" <> parens (text (show str)
                                                                 )
 prettyStatement (StmtPrintm expr) = text "printm" <> parens (prettyExpression 0 expr)
 prettyStatement (StmtRun name args) = text "run" <+> text name <> parens (hcat (punctuate comma (map (prettyAnyExpression 0) args)))
+prettyStatement StmtSkip = text "skip"
 
 prettyRecvArg :: RecvArg -> Doc
 prettyRecvArg (RecvVar ref) = prettyVarRef ref
