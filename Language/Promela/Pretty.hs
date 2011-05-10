@@ -63,6 +63,12 @@ prettyAnyExpression prec (BinExpr op lhs rhs) = if opPrec op < prec
                                                 else p
   where
     p = prettyAnyExpression (opPrec op) lhs <+> prettyBinOp op <+> prettyAnyExpression (opPrec op) rhs
+prettyAnyExpression prec (UnExpr op expr) = text (case op of
+  UnLNot -> "!"
+  UnBNot -> "~"
+  UnNeg -> "-") <> ((if prec > 1
+                     then parens
+                     else id) (prettyAnyExpression 1 expr))
 prettyAnyExpression prec (RefExpr ref) = prettyVarRef ref
 prettyAnyExpression prec (RunExpr name args prio) = text "run" <+> text name <> parens (hsep $ punctuate comma $ map (prettyAnyExpression 0) args) <+> 
                                                     (case prio of

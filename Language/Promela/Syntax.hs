@@ -37,6 +37,7 @@ data Typename
 
 data AnyExpression
     = BinExpr BinOp AnyExpression AnyExpression
+    | UnExpr UnOp AnyExpression
     | RefExpr VarRef
     | RunExpr String [AnyExpression] (Maybe Integer)
     | ConstExpr Constant
@@ -69,6 +70,12 @@ data BinOp
     | BinAnd
     | BinOr
     deriving Show
+
+data UnOp
+     = UnLNot
+     | UnBNot
+     | UnNeg
+     deriving Show
 
 data Step = StepStmt Statement (Maybe Statement)
           | StepDecl Declaration
