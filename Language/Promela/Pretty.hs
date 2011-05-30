@@ -35,6 +35,9 @@ prettyModule (Init prio steps) = text "init" <+> (case prio of
                                  lbrace $$ nest 2 (prettySequence steps) $$ rbrace
 prettyModule (Decl decl) = prettyDeclaration decl
 prettyModule (Never steps) = text "never" <+> lbrace $$ nest 2 (prettySequence steps) $$ rbrace
+prettyModule (LTL mname f) = text "ltl" <+> (case mname of
+                                                Nothing -> empty
+                                                Just name -> text name) <+> lbrace $$ nest 2 (prettyLTL f) $$ rbrace
 
 prettyDeclarations :: [Declaration] -> Doc
 prettyDeclarations = hsep . punctuate semi . map prettyDeclaration
@@ -137,6 +140,22 @@ prettyRecvArg :: RecvArg -> Doc
 prettyRecvArg (RecvVar ref) = prettyVarRef ref
 prettyRecvArg (RecvEval ref) = text "eval" <> parens (prettyVarRef ref)
 prettyRecvArg (RecvConst c) = prettyConst c
+
+prettyLTL :: LTLExpr -> Doc
+prettyLTL (LTLNormalExpr e) = parens $ prettyAnyExpression 0 e
+prettyLTL (LTLBin op l r) = parens $ prettyLTL l <+> (case op of
+                                                         LTLUntil -> char 'U'
+                                                         LTLWeakUntil -> char 'W'
+                                                         LTLUntilOp -> char 'V'
+                                                         LTLAnd -> text "&&"
+                                                         LTLOr -> text "||"
+                                                         LTLImplication -> text "->"
+                                                         LTLEquivalence -> text "<->") <+> prettyLTL r
+prettyLTL (LTLUn op e) = parens $ (case op of
+                                      LTLAlways -> text "[]"
+                                      LTLEventually -> text "<>"
+                                      LTLNext -> char 'X'
+                                      LTLNot -> char '!') <+> prettyLTL e
 
 prettyBinOp :: BinOp -> Doc
 prettyBinOp op = text $ case op of

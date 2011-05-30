@@ -16,6 +16,7 @@ data Module
     | CCode String
     | Init (Maybe Integer) [Step]
     | Never [Step]
+    | LTL (Maybe String) LTLExpr
     deriving Show
 
 data Declaration = Declaration
@@ -111,6 +112,26 @@ data Constant
 data RecvArg = RecvVar VarRef
              | RecvEval VarRef
              | RecvConst Constant
+             deriving Show
+
+data LTLBinOp = LTLUntil
+              | LTLWeakUntil
+              | LTLUntilOp
+              | LTLAnd
+              | LTLOr
+              | LTLImplication
+              | LTLEquivalence
+              deriving Show
+
+data LTLUnOp = LTLAlways
+             | LTLEventually
+             | LTLNot
+             | LTLNext
+             deriving Show
+
+data LTLExpr = LTLNormalExpr AnyExpression
+             | LTLBin LTLBinOp LTLExpr LTLExpr
+             | LTLUn LTLUnOp LTLExpr
              deriving Show
 
 prIf :: ToStep a => [[a]] -> Statement
