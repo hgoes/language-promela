@@ -17,13 +17,13 @@ data Module
     | Init (Maybe Integer) [Step]
     | Never [Step]
     | LTL (Maybe String) LTLExpr
-    deriving Show
+    deriving (Show,Eq,Ord)
 
 data Declaration = Declaration
     { declarationVisible :: Maybe Bool
     , declarationType :: Typename
     , declarationVariables :: [(String,Maybe Integer,Maybe AnyExpression)]
-    } deriving Show
+    } deriving (Show,Eq,Ord)
 
 data Typename
     = TypeBit
@@ -34,7 +34,7 @@ data Typename
     | TypeMType
     | TypeChan
     | TypeCustom String
-    deriving Show
+    deriving (Show,Eq,Ord)
 
 data AnyExpression
     = BinExpr BinOp AnyExpression AnyExpression
@@ -42,14 +42,14 @@ data AnyExpression
     | RefExpr VarRef
     | RunExpr String [AnyExpression] (Maybe Integer)
     | ConstExpr Constant
-    deriving Show
+    deriving (Show,Eq,Ord)
 
 data VarRef = VarRef String (Maybe Integer) (Maybe VarRef)
-            deriving Show
+            deriving (Show,Eq,Ord)
 
 data Expression
     = ExprAny AnyExpression
-    deriving Show
+    deriving (Show,Eq,Ord)
 
 data BinOp
     = BinPlus
@@ -70,17 +70,17 @@ data BinOp
     | BinShiftR
     | BinAnd
     | BinOr
-    deriving Show
+    deriving (Show,Eq,Ord)
 
 data UnOp
      = UnLNot
      | UnBNot
      | UnNeg
-     deriving Show
+     deriving (Show,Eq,Ord)
 
 data Step = StepStmt Statement (Maybe Statement)
           | StepDecl Declaration
-          deriving Show
+          deriving (Show,Eq,Ord)
 
 data Statement
     = StmtIf [[Step]]
@@ -101,18 +101,18 @@ data Statement
     | StmtPrintm Expression
     | StmtRun String [AnyExpression]
     | StmtSkip
-    deriving Show
+    deriving (Show,Eq,Ord)
 
 data Constant
     = ConstBool Bool
     | ConstInt Integer
     | ConstSkip
-    deriving Show
+    deriving (Show,Eq,Ord)
 
 data RecvArg = RecvVar VarRef
              | RecvEval VarRef
              | RecvConst Constant
-             deriving Show
+             deriving (Show,Eq,Ord)
 
 data LTLBinOp = LTLUntil
               | LTLWeakUntil
@@ -121,18 +121,18 @@ data LTLBinOp = LTLUntil
               | LTLOr
               | LTLImplication
               | LTLEquivalence
-              deriving Show
+              deriving (Show,Eq,Ord)
 
 data LTLUnOp = LTLAlways
              | LTLEventually
              | LTLNot
              | LTLNext
-             deriving Show
+             deriving (Show,Eq,Ord)
 
 data LTLExpr = LTLNormalExpr AnyExpression
              | LTLBin LTLBinOp LTLExpr LTLExpr
              | LTLUn LTLUnOp LTLExpr
-             deriving Show
+             deriving (Show,Eq,Ord)
 
 prIf :: ToStep a => [[a]] -> Statement
 prIf stps = StmtIf (fmap (fmap toStep) stps)
