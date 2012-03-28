@@ -83,6 +83,11 @@ lexerMove (LexerPos l c) '\t' = LexerPos l (((c+7) `div` 8)*8+1)
 lexerMove (LexerPos l c) '\n' = LexerPos (l+1) 1
 lexerMove (LexerPos l c) _    = LexerPos l (c+1)
 
+alexGetByte :: AlexInput -> Maybe (Int,AlexInput)
+alexGetByte inp = case alexGetChar inp of
+  Nothing -> Nothing
+  Just (ch,inp') -> Just (ord ch,inp')
+
 alexGetChar :: AlexInput -> Maybe (Char,AlexInput)
 alexGetChar (pos,c,inp)
   | LBS.null inp = Nothing
